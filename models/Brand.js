@@ -1,11 +1,22 @@
-import mongoose from 'mongoose';
-
-const brandSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
-    logoSlug: { type: String },
-    templates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Template' }],
-}, { timestamps: true });
-
-const Brand = mongoose.models.Brand || mongoose.model('Brand', brandSchema);
-
-export default Brand;
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Brand extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Brand.init({
+    name: DataTypes.STRING,
+  }, {
+    sequelize,
+    timestamps: true,
+    modelName: 'Brand',
+  });
+  return Brand;
+};

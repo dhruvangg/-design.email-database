@@ -1,18 +1,23 @@
-import Category from '../models/Category.js';
-import connectDB from "../config/db.js"
+const { Category } = require('../models')
 
-const createCategory = async ({ name, description, templates }) => {
-    try {
-        await connectDB()
-        const newCategory = await Category.create({
-            name,
-            description,
-            templates,
-        });
-        console.log('New Category Created:', newCategory.name);
-    } catch (error) {
-        console.error('Error creating category:', error.message);
+module.exports = {
+    getCategory: async () => {
+        try {
+            const category = await Category.findAll();
+            return { success: true, data: category };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    },
+    createCategory: async ({ name }) => {
+        try {
+            if (!name || typeof name !== 'string' || name.trim() === '') {
+                throw new Error('Invalid brand name');
+            }
+            const newCategory = await Category.create({ name });
+            return { success: true, data: newCategory };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     }
-};
-
-export { createCategory };
+}

@@ -3,13 +3,16 @@
   "version": "1.0.6",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "node --env-file=__test/.env  __test/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^8.0.3"
+    "mysql2": "^3.10.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

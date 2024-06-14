@@ -1,11 +1,24 @@
-import mongoose from 'mongoose';
-
-const categorySchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
-    description: { type: String },
-    templates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Template' }],
-}, { timestamps: true });
-
-const Category = mongoose.models.Category || mongoose.model('Category', categorySchema);
-
-export default Category;
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Category extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Category.init({
+    name: DataTypes.STRING
+  }, {
+    sequelize,
+    timestamps: true,
+    modelName: 'Category',
+  });
+  return Category;
+};

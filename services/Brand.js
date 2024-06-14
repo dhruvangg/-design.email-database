@@ -1,18 +1,24 @@
-import Brand from '../models/Brand.js';
-import connectDB from "../config/db.js"
+const { Brand } = require('../models');
 
-const createBrand = async ({ name, logoSlug, templates }) => {
-    try {
-        await connectDB()
-        const newBrand = await Brand.create({
-            name,
-            logoSlug,
-            templates,
-        });
-        console.log('New Brand Created:', newBrand.name);
-    } catch (error) {
-        console.error('Error creating brand:', error.message);
+module.exports = {
+    getBrand: async () => {
+        try {
+            const brands = await Brand.findAll();
+            return { success: true, data: brands };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    },
+    createBrand: async ({ name }) => {
+        try {
+            if (!name || typeof name !== 'string' || name.trim() === '') {
+                throw new Error('Invalid brand name');
+            }
+            const newBrand = await Brand.create({ name });
+            return { success: true, data: newBrand };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     }
-};
+}
 
-export { createBrand };

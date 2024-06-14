@@ -1,17 +1,27 @@
-import mongoose from 'mongoose';
-
-const templateSchema = new mongoose.Schema({
-    subject: { type: String, required: true },
-    sender: { type: String, required: true },
-    body: { type: [String], required: true },
-    html: { type: String, required: true },
-    image: { type: String, required: true },
-    messageId: { type: String, required: true, unique: true },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
-    brand: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand' },
-}, { timestamps: true });
-
-templateSchema.index({ subject: 'text', html: 'text' });
-const Template = mongoose.models.Template || mongoose.model('Template', templateSchema);
-
-export default Template;
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Template extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Template.init({
+    subject: DataTypes.STRING,
+    sender: DataTypes.STRING,
+    html: DataTypes.STRING,
+    image: DataTypes.STRING,
+    messageId: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Template',
+  });
+  return Template;
+};
